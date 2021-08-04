@@ -11,6 +11,11 @@
       "Jascha030\\ComposerTemplate\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Jascha030\\ComposerTemplate\\Tests\\": "tests/"
+    }
+  },
   "authors": [
     {
       "name": "Jascha030",
