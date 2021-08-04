@@ -1,0 +1,19 @@
+# Intellij IDE's
+/.idea/
+
+# VS Code
+/.vscode/
+
+# Composer
+/vendor/
+
+# NodeJS
+/node_modules/
+/dist/
+
+# MacOS
+*.DS_Store
+.DS_Store
+
+# Other
+**.cache
