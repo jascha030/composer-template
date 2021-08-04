@@ -1,6 +1,9 @@
 # Intellij IDE's
 /.idea/
 
+# VS Code
+/.vscode/
+
 # Composer
 /vendor/
 
@@ -14,4 +17,3 @@
 
 # Other
 **.cache
-
