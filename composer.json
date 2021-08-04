@@ -1,0 +1,33 @@
+{
+    "name": "jascha030/composer-template",
+    "description": "Template repo for creating composer projects",
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "phpunit/phpunit": "^9.5"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jascha030\\ComposerTemplate\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jascha030",
+            "email": "contact@jaschavanaalst.nl"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^7.4 || ^8.0"
+    },
+    "config": {
+        "platform": {
+            "php": "7.4"
+        }
+    },
+    "scripts": {
+        "phpunit": "vendor/bin/phpunit",
+        "format": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.php --allow-risky=yes"
+    }
+}
