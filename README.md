@@ -1,6 +1,6 @@
 # Composer project template
 
-Description: A simple project description similar to the one found in your `composer.json`.
+A simple project description similar to the one found in your `composer.json`.
 
 ## Getting started
 
