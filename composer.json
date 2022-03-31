@@ -2,10 +2,23 @@
   "name": "jascha030/composer-template",
   "description": "Template repo for creating composer projects",
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^3.0",
-    "phpunit/phpunit": "^9.5"
+    "roave/security-advisories": "dev-latest",
+    "friendsofphp/php-cs-fixer": "^3.8",
+    "phpunit/phpunit": "^9.5",
+    "jascha030/phpunit-config": "^1.0",
+    "jascha030/php-cs-config": "^1.0"
   },
   "license": "MIT",
+  "authors": [
+    {
+      "name": "Jascha030",
+      "email": "contact@jaschavanaalst.nl"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": "^8.0"
+  },
   "autoload": {
     "psr-4": {
       "Jascha030\\ComposerTemplate\\": "src/"
@@ -16,23 +29,10 @@
       "Jascha030\\ComposerTemplate\\Tests\\": "tests/"
     }
   },
-  "authors": [
-    {
-      "name": "Jascha030",
-      "email": "contact@jaschavanaalst.nl"
-    }
-  ],
-  "minimum-stability": "stable",
-  "require": {
-    "php": "^7.4 || ^8.0"
-  },
-  "config": {
-    "platform": {
-      "php": "7.4"
-    }
-  },
   "scripts": {
-    "phpunit": "vendor/bin/phpunit",
-    "format": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --allow-risky=yes"
+    "phpunit": "phpunit --config phpunit.xml",
+    "php-cs-fixer": "php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+    "test": "@phpunit",
+    "format": "@php-cs-fixer"
   }
 }
