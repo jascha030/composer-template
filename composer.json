@@ -2,6 +2,7 @@
   "name": "jascha030/composer-template",
   "description": "Template repo for creating composer projects",
   "license": "MIT",
+  "type": "project",
   "authors": [
     {
       "name": "Jascha030",
