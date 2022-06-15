@@ -1,19 +1,17 @@
-# Intellij IDE's
-/.idea/
+# IDE Projectfiles
+.idea/
+.vscode/
 
-# VS Code
-/.vscode/
+# Dynamic
+.cache
+.var
 
-# Composer
-/vendor/
+# Library
+vendor/
+node_modules/
+dist/
 
-# NodeJS
-/node_modules/
-/dist/
 
 # MacOS
 *.DS_Store
 .DS_Store
-
-# Other
-**.cache
