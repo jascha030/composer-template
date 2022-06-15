@@ -1,43 +1,52 @@
 {
-  "name": "jascha030/composer-template",
+  "name": "jascha030/package-name",
   "description": "Template repo for creating composer projects",
+  "type": "library",
   "license": "MIT",
-  "type": "project",
   "authors": [
     {
       "name": "Jascha030",
       "email": "contact@jaschavanaalst.nl"
     }
   ],
+  "keywords": [],
+  "homepage": "https://github.com/jascha030",
+  "config": {},
+  "bin": [],
   "autoload": {
-    "psr-4": {
-      "Jascha030\\ComposerTemplate\\": "src/"
-    }
+    "psr-4": {}
   },
   "autoload-dev": {
-    "psr-4": {
-      "Jascha030\\ComposerTemplate\\Tests\\": "tests/"
-    }
+    "psr-4": {}
   },
-  "minimum-stability": "stable",
+  "repositories": [],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "require": {
-    "php": "^8.0"
+    "php": "^7.4|^8.0.0|^8.1"
   },
   "require-dev": {
-    "roave/security-advisories": "dev-latest",
-    "friendsofphp/php-cs-fixer": "^3.8",
+    "friendsofphp/php-cs-fixer": "^v3.8.0",
     "phpunit/phpunit": "^9.5",
-    "jascha030/phpunit-config": "^1.0",
-    "jascha030/php-cs-config": "^1.0"
+    "roave/security-advisories": "dev-latest",
+    "symfony/var-dumper": "4.4|^5.4|^6.0"
   },
+  "suggest": {
+    "symfony/console": "",
+    "php-di/php-di": "^6.0",
+    "guzzlehttp/guzzle": "^7.4",
+    "vlucas/phpdotenv": "",
+    "roots/wordpress": ""
+  },
+  "extra": {},
   "scripts": {
-    "phpunit": "phpunit --config phpunit.xml",
+    "phpunit": "phpunit -c phpunit.dist.xml",
     "php-cs-fixer": "php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-    "test": "@phpunit",
-    "format": "@php-cs-fixer",
-    "create-config-files": "pcsconf ./ && puconf ./",
-    "post-install-cmd": [
-      "@create-config-files"
-    ]
+    "test": "@php-cs-fixer",
+    "format": "@php-cs-fixer"
+  },
+  "scripts-descriptions": {
+    "test": "Runs phpunit with phpunit.dist.xml",
+    "format": "Runs php-cs-fixer with .php-cs-fixer.dist.php."
   }
 }

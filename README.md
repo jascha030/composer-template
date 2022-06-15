@@ -6,8 +6,8 @@ A simple project description similar to the one found in your `composer.json`.
 
 ## Prerequisites
 
-* Php `^7.4 || ^8.0`
-* Composer `^2`
+* php: `^7.4|^8.0.0|^8.1`
+* Composer `^2.3` (prefered)
 
 > **Note: Don't forget to include any server prerequisites**, for example _php extensions_,
 > even when they are extensions which are enabled by default, you can save people a lot of wasted time in the off-chance
@@ -23,7 +23,7 @@ composer require jascha030/composer-template
 
 #### Distribution
 
-Alternative steps for distribution.
+Alternative steps for distribution when not required as composer package.
 
 ```shell
 composer require --no-dev jascha030/composer-template
@@ -38,8 +38,10 @@ Extensive instructions in how to use your package in general or for use in the d
 Included with the package are a set of Unit tests using `phpunit/phpunit`. For ease of use a composer script command is
 defined to run the tests.
 
+The default configuration will be used when using the `test` command, which is defined at `phpunit.dist.xml`.
+
 ```shell
-composer run phpunit
+composer run test
 ```
 
 A code coverage report is generated in the project's root as `cov.xml`. The `cov.xml` file is not ignored in the
@@ -69,7 +71,7 @@ Instructions regarding further contribution to the package itself.
 Any developer should take and learn from other open-source projects. But I encourage everyone to state their sources and
 inspirations. If it's not to promote a healthy community, it might inspire or teach others.
 
-Also I like to add some general information about why I made something or just about the general subject. And if I can
+Also, I like to add some general information about why I made something or just about the general subject. And if I can
 think of any, I like to leave some links to resources or articles from other developers who might have taught me in
 understanding a certain subject.
 
@@ -80,4 +82,4 @@ the [MIT License](https://github.com/jascha030/composer-template/blob/master/LIC
 
 > **Note:** to find the right license for your project
 > use Github's [https://choosealicense.com/](https://choosealicense.com/),
-> or read up on any other information, regarding Licensing your project in [their docs page on licensing](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/licensing-a-repository). 
+> or read up on any other information, regarding Licensing your project in [their docs page on licensing](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-repository-on-github/licensing-a-repository).
