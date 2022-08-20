@@ -32,21 +32,21 @@
     "symfony/var-dumper": "4.4|^5.4|^6.0"
   },
   "suggest": {
-    "symfony/console": "",
+    "symfony/console": "*",
     "php-di/php-di": "^6.0",
     "guzzlehttp/guzzle": "^7.4",
-    "vlucas/phpdotenv": "",
-    "roots/wordpress": ""
+    "vlucas/phpdotenv": "*",
+    "roots/wordpress": "*"
   },
   "extra": {},
   "scripts": {
-    "phpunit": "phpunit -c .phpunit.dist.xml",
-    "php-cs-fixer": "php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+    "phpunit": "phpunit -c .phpunit.xml",
+    "php-cs-fixer": "php-cs-fixer fix --config .php-cs-fixer.php",
     "test": "@phpunit",
     "format": "@php-cs-fixer"
   },
   "scripts-descriptions": {
-    "test": "Runs phpunit with phpunit.dist.xml",
-    "format": "Runs php-cs-fixer with .php-cs-fixer.dist.php."
+    "test": "Runs phpunit with .phpunit.xml",
+    "format": "Runs php-cs-fixer with .php-cs-fixer.php."
   }
 }
