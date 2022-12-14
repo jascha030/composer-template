@@ -1,7 +1,7 @@
 {
-  "name": "jascha030/package-name",
+  "name": "jascha030/template",
   "description": "Template repo for creating composer projects",
-  "type": "library",
+  "type": "project",
   "license": "MIT",
   "authors": [
     {
@@ -11,8 +11,11 @@
   ],
   "keywords": [],
   "homepage": "https://github.com/jascha030",
-  "config": {},
-  "bin": [],
+  "config": {
+    "allow-plugins": {
+      "bamarni/composer-bin-plugin": true
+    }
+  },
   "autoload": {
     "psr-4": {}
   },
@@ -26,19 +29,13 @@
     "php": "^7.4|^8.0.0|^8.1"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "^v3.8.0",
-    "phpunit/phpunit": "^9.5",
     "roave/security-advisories": "dev-latest",
-    "symfony/var-dumper": "4.4|^5.4|^6.0"
+    "symfony/var-dumper": "4.4||^5.4||^6.0",
+    "bamarni/composer-bin-plugin": "^1.8"
   },
-  "suggest": {
-    "symfony/console": "*",
-    "php-di/php-di": "^6.0",
-    "guzzlehttp/guzzle": "^7.4",
-    "vlucas/phpdotenv": "*",
-    "roots/wordpress": "*"
+  "extra": {
+
   },
-  "extra": {},
   "scripts": {
     "phpunit": "phpunit -c .phpunit.xml",
     "php-cs-fixer": "php-cs-fixer fix --config .php-cs-fixer.php",
