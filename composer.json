@@ -1,7 +1,7 @@
 {
   "name": "jascha030/template",
-  "description": "Template repo for creating composer projects",
-  "type": "project",
+  "description": "Template repo for creating composer packages",
+  "type": "library",
   "license": "MIT",
   "authors": [
     {
@@ -12,6 +12,11 @@
   "keywords": [],
   "homepage": "https://github.com/jascha030",
   "config": {
+    "platform": {
+      "php": "8.0.2"
+    },
+    "platform-check": false,
+    "sort-packages": true,
     "allow-plugins": {
       "bamarni/composer-bin-plugin": true
     }
@@ -26,7 +31,7 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^7.4|^8.0.0|^8.1"
+    "php": "~8.0||~8.1||~8.2"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
@@ -34,16 +39,17 @@
     "bamarni/composer-bin-plugin": "^1.8"
   },
   "extra": {
-
+    "bamarni-bin": {
+      "bin-links": true,
+      "forward-command": false
+    }
   },
   "scripts": {
-    "phpunit": "phpunit -c .phpunit.xml",
-    "php-cs-fixer": "php-cs-fixer fix --config .php-cs-fixer.php",
-    "test": "@phpunit",
-    "format": "@php-cs-fixer"
-  },
-  "scripts-descriptions": {
-    "test": "Runs phpunit with .phpunit.xml",
-    "format": "Runs php-cs-fixer with .php-cs-fixer.php."
+    "phpunit": "tools/phpunit",
+    "php-cs-fixer": "tools/php-cs-fixer",
+    "phpstan": "tools/phpstan",
+    "format": "@php-cs-fixer fix --config=.php-cs-fixer.php",
+    "test": "@phpunit -c phpunit.xml",
+    "analyze": "@phpstan analyze --config=phpstan.neon"
   }
 }
