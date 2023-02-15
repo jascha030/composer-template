@@ -1,32 +1,33 @@
-# IDE Projectfiles
-.idea/
-.vscode/
+### Default project gitignore
 
-# Dynamic
-.var/cache/phpunit/*
-!.var/cache/phpunit/.gitkeep
-.var/cache/php-cs-fixer/*
-!.var/cache/php-cs-fixer/.gitkeep
-temp/
-tmp/
-dist/
-build/
-.cache/
-**.cache
+## IDE Projectfiles
+/.idea/
+/.vscode/
 
-# Library
+## Dynamic
+/.var/cache/phpunit/*
+!/.var/cache/phpunit/.gitkeep
+/.var/cache/php-cs-fixer/*
+!/.var/cache/php-cs-fixer/.gitkeep
+/temp/
+/tmp/
+/dist/
+/build/
+/**.cache
+
+## Library
 vendor/
-node_modules/
-tools/
+/node_modules/
+#/tools/
 
-# Env
-.env
-auth.json
-.pm.toml
+## Env
+/.env
+/auth.json
+/.pm.toml
 
-# Other
-*.DS_Store
-.DS_Store
-*.sql
-TODO.md
+## Other
+/*.DS_Store
+/.DS_Store
+/*.sql
+/TODO.md
 
