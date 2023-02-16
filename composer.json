@@ -1,55 +1,58 @@
 {
-  "name": "jascha030/template",
-  "description": "Template repo for creating composer packages",
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Jascha030",
-      "email": "contact@jaschavanaalst.nl"
-    }
-  ],
-  "keywords": [],
-  "homepage": "https://github.com/jascha030",
-  "config": {
-    "platform": {
-      "php": "8.0.2"
+    "name": "jascha030/template",
+    "description": "Template repo for creating composer packages",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jascha030",
+            "email": "contact@jaschavanaalst.nl"
+        }
+    ],
+    "keywords": [],
+    "homepage": "https://github.com/jascha030",
+    "autoload": {
+        "psr-4": {
+            "Jascha030\\Project\\": "src/"
+        }
     },
-    "platform-check": false,
-    "sort-packages": true,
-    "allow-plugins": {
-      "bamarni/composer-bin-plugin": true
+    "autoload-dev": {
+        "psr-4": {
+            "Jascha030\\Project\\": "tests/Unit/"
+        }
+    },
+    "repositories": [],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "~8.0||~8.1||~8.2"
+    },
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    },
+    "config": {
+        "platform": {
+            "php": "8.1"
+        },
+        "platform-check": false,
+        "sort-packages": true,
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true
+        }
+    },
+    "extra": {
+        "bamarni-bin": {
+            "bin-links": true,
+            "forward-command": false
+        }
+    },
+    "scripts": {
+        "phpunit": "tools/phpunit.phar",
+        "php-cs-fixer": "tools/php-cs-fixer",
+        "phpstan": "vendor/bin/phpstan",
+        "format": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+        "test": "@phpunit -c phpunit.xml.dist",
+        "analyze": "@phpstan analyze --config=phpstan.neon.dist",
+        "analyze:baseline": "@analyze --generate-baseline"
     }
-  },
-  "autoload": {
-    "psr-4": {}
-  },
-  "autoload-dev": {
-    "psr-4": {}
-  },
-  "repositories": [],
-  "minimum-stability": "dev",
-  "prefer-stable": true,
-  "require": {
-    "php": "~8.0||~8.1||~8.2"
-  },
-  "require-dev": {
-    "roave/security-advisories": "dev-latest",
-    "symfony/var-dumper": "4.4||^5.4||^6.0",
-    "bamarni/composer-bin-plugin": "^1.8"
-  },
-  "extra": {
-    "bamarni-bin": {
-      "bin-links": true,
-      "forward-command": false
-    }
-  },
-  "scripts": {
-    "phpunit": "tools/phpunit",
-    "php-cs-fixer": "tools/php-cs-fixer",
-    "phpstan": "tools/phpstan",
-    "format": "@php-cs-fixer fix --config=.php-cs-fixer.php",
-    "test": "@phpunit -c phpunit.xml",
-    "analyze": "@phpstan analyze --config=phpstan.neon"
-  }
 }
