@@ -13,6 +13,6 @@ parameters:
       analyseAndScan:
         - tests/*/Fixtures/*
 
-  tmpDir: .var/cache
+  tmpDir: .var/cache/phpstan
   editorUrl: 'phpstorm://open?file=%%file%%&line=%%line%%'
 
