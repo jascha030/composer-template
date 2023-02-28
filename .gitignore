@@ -9,6 +9,9 @@
 !/.var/cache/phpunit/.gitkeep
 /.var/cache/php-cs-fixer/*
 !/.var/cache/php-cs-fixer/.gitkeep
+/.var/cache/phpstan/*
+!/.var/cache/phpstan/.gitkeep
+
 /temp/
 /tmp/
 /dist/
@@ -17,8 +20,9 @@
 
 ## Library
 vendor/
+vendor-bin/**/vendor/
 /node_modules/
-#/tools/
+tools
 
 ## Env
 /.env
