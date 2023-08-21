@@ -44,7 +44,7 @@
     "extra": {
         "bamarni-bin": {
             "bin-links": true,
-            "forward-command": false
+            "forward-command": true
         }
     },
     "archive": {
@@ -67,7 +67,7 @@
     },
     "scripts": {
         "phpunit": "tools/phpunit.phar",
-        "php-cs-fixer": "tools/php-cs-fixer",
+        "php-cs-fixer": "tools/php-cs-fixer.phar",
         "phpstan": "vendor/bin/phpstan",
         "format": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
         "test": "@phpunit -c phpunit.xml.dist",
