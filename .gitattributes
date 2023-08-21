@@ -4,6 +4,7 @@
 /tests/                 export-ignore
 /tools/                 export-ignore
 /tools/*                binary
+/tests/                 export-ignore
 /vendor-bin/            export-ignore
 
 /.editorconfig          export-ignore
