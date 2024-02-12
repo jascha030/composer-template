@@ -18,7 +18,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Jascha030\\Project\\": "tests/Unit/"
+            "Jascha030\\Project\\": "tests/"
         }
     },
     "repositories": [],
