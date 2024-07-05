@@ -24,15 +24,17 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "~8.1.0 || ~8.2.0 || ~8.3.0"
+        "php": "~8.2.0 || ~8.3.0",
+        "composer-plugin-api": "^2.6"
     },
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.8",
+        "composer/composer": "^2.7",
         "roave/security-advisories": "dev-latest"
     },
     "config": {
         "platform": {
-            "php": "8.1"
+            "php": "8.2"
         },
         "platform-check": false,
         "sort-packages": true,
@@ -47,6 +49,15 @@
         }
     },
     "scripts": {
+        "tools:install": [
+            "@putenv XDEBUG_MODE=off",
+            "@putenv COMPOSER_ALLOW_SUPERUSER=1",
+            "@phive install --trust-gpg-keys 4AA394086372C20A,E82B2FB314E9906E,C00543248C87FB13"
+        ],
+        "normalize": [
+            "@tools:install",
+            "tools/composer-normalize --indent-size=4 --indent-style=space"
+        ],
         "phpunit": "tools/phpunit.phar",
         "php-cs-fixer": "tools/php-cs-fixer.phar",
         "phpstan": "vendor/bin/phpstan",
