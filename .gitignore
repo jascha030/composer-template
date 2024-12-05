@@ -5,12 +5,7 @@
 /.vscode/
 
 ## Dynamic
-/.var/cache/phpunit/*
-!/.var/cache/phpunit/.gitkeep
-/.var/cache/php-cs-fixer/*
-!/.var/cache/php-cs-fixer/.gitkeep
-/.var/cache/phpstan/*
-!/.var/cache/phpstan/.gitkeep
+/.var/
 
 /temp/
 /tmp/
@@ -21,7 +16,8 @@
 ## Library
 vendor
 /node_modules/
-/tools
+/tools/*
+!/tools/phive
 
 ## Env
 /.env
