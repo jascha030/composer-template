@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the jascha030/php-cs-fixer-config package.
+ * This file is part of the jascha030/template package.
  *
  * (c) Jascha van Aalst <contact@jaschavanaalst.nl>
  *
@@ -25,7 +25,7 @@ $cacheFile      = "{$cacheDirectory}/.php-cs-fixer.cache";
 /**
  * Create a .cache dir if not already present.
  */
-if (! file_exists($cacheDirectory) && ! mkdir($cacheDirectory, 0700, true) && ! is_dir($cacheDirectory)) {
+if (! file_exists($cacheDirectory) && ! mkdir($cacheDirectory, 0o700, true) && ! is_dir($cacheDirectory)) {
     throw new RuntimeException(sprintf('Directory "%s" was not created', $cacheDirectory));
 }
 
@@ -40,12 +40,13 @@ $finder = Finder::create()
         'vendor',
         'vendor-bin',
     ])
+    ->notName('.phpstorm.meta.php')
     ->ignoreDotFiles(false);
 
 return (new Config(
-    Config::PHP_74,
+    Config::PHP_82,
     <<<'EOF'
-        This file is part of the Jascha van Aalst WordPress Back-end PHP-CS-Fixer Config package.
+        This file is part of the jascha030/template package.
 
         (c) Jascha van Aalst <contact@jaschavanaalst.nl>
 
