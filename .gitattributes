@@ -17,4 +17,7 @@
 /phpstan.neon.dist      export-ignore
 /phpunit.xml.dist       export-ignore
 
+*.php text eol=lf
+*.phpt text eol=lf
 *.php diff=php
+
