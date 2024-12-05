@@ -17,6 +17,7 @@
     "require-dev": {
         "bamarni/composer-bin-plugin": "^1.8",
         "ergebnis/composer-normalize": "^2.45",
+        "roave/backward-compatibility-check": "^8.10",
         "roave/security-advisories": "dev-latest"
     },
     "minimum-stability": "dev",
@@ -64,6 +65,7 @@
             "@tools:install",
             "@phpstan analyze --memory-limit=-1 -c phpstan.neon.dist --generate-baseline"
         ],
+        "bc-check": "vendor/bin/roave-backward-compatibility-check --format=markdown > results.md",
         "format": [
             "@format:php"
         ],
@@ -87,6 +89,7 @@
     "scripts-descriptions": {
         "analyze": "Runs local phpstan analyze with config:  `phpstan.neon.dist`.",
         "analyze:baseline": "Runs local phpstan analyze with config: `phpstan.neon.dist`, and generates a new `phpstan-baseline.neon`.",
+        "bc-check": "Check for backwards-compatibility issues.",
         "format": "Run @format:php and @format:twig scripts.",
         "format:php": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
         "phive": "Proxy the phive binary located at ./tools/phive",
