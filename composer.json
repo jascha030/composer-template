@@ -1,16 +1,28 @@
 {
     "name": "jascha030/template",
     "description": "Template repo for creating composer packages",
-    "type": "library",
     "license": "MIT",
+    "type": "library",
+    "keywords": [],
     "authors": [
         {
             "name": "Jascha030",
             "email": "contact@jaschavanaalst.nl"
         }
     ],
-    "keywords": [],
     "homepage": "https://github.com/jascha030",
+    "require": {
+        "php": "~8.2.0 || ~8.3.0",
+        "composer-plugin-api": "^2.6"
+    },
+    "require-dev": {
+        "bamarni/composer-bin-plugin": "^1.8",
+        "composer/composer": "^2.7",
+        "ergebnis/composer-normalize": "^2.45",
+        "roave/security-advisories": "dev-latest"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Jascha030\\Project\\": "src/"
@@ -21,49 +33,69 @@
             "Jascha030\\Project\\": "tests/"
         }
     },
-    "minimum-stability": "dev",
-    "prefer-stable": true,
-    "require": {
-        "php": "~8.2.0 || ~8.3.0",
-        "composer-plugin-api": "^2.6"
-    },
-    "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.8",
-        "composer/composer": "^2.7",
-        "roave/security-advisories": "dev-latest"
-    },
     "config": {
+        "allow-plugins": {
+            "bamarni/composer-bin-plugin": true,
+            "ergebnis/composer-normalize": true
+        },
         "platform": {
             "php": "8.2"
         },
         "platform-check": false,
-        "sort-packages": true,
-        "allow-plugins": {
-            "bamarni/composer-bin-plugin": true
-        }
+        "sort-packages": true
     },
     "extra": {
         "bamarni-bin": {
             "bin-links": true,
             "forward-command": true
+        },
+        "composer-normalize": {
+            "indent-size": 4,
+            "indent-style": "space"
         }
     },
     "scripts": {
+        "post-install-cmd": [
+            "@tools:install"
+        ],
+        "analyze": [
+            "@tools:install",
+            "@phpstan analyze --memory-limit=-1 -c phpstan.neon.dist"
+        ],
+        "analyze:baseline": [
+            "@tools:install",
+            "@phpstan analyze --memory-limit=-1 -c phpstan.neon.dist --generate-baseline"
+        ],
+        "format": [
+            "@format:php"
+        ],
+        "format:php": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+        "phive": "tools/phive",
+        "php-cs-fixer": "vendor/bin/php-cs-fixer",
+        "phpstan": "vendor/bin/phpstan",
+        "phpunit": "tools/phpunit.phar",
+        "test": [
+            "@tools:install",
+            "@putenv XDEBUG_MODE=coverage",
+            "@phpunit -c phpunit.xml.dist"
+        ],
         "tools:install": [
             "@putenv XDEBUG_MODE=off",
             "@putenv COMPOSER_ALLOW_SUPERUSER=1",
-            "@phive install --trust-gpg-keys 4AA394086372C20A,E82B2FB314E9906E,C00543248C87FB13"
-        ],
-        "normalize": [
-            "@tools:install",
-            "tools/composer-normalize --indent-size=4 --indent-style=space"
-        ],
-        "phpunit": "tools/phpunit.phar",
-        "php-cs-fixer": "tools/php-cs-fixer.phar",
-        "phpstan": "vendor/bin/phpstan",
-        "format": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-        "test": "@phpunit -c phpunit.xml.dist",
-        "analyze": "@phpstan analyze --config=phpstan.neon.dist",
-        "analyze:baseline": "@analyze --generate-baseline"
+            "@php tools/phive install --trust-gpg-keys 4AA394086372C20A 1> /dev/null",
+            "@php -r \" ! file_exists('tools/phpunit.xsd') && (new Phar('tools/phpunit.phar'))->extractTo('tools', 'phpunit.xsd');\""
+        ]
+    },
+    "scripts-descriptions": {
+        "analyze": "Runs local phpstan analyze with config:  `phpstan.neon.dist`.",
+        "analyze:baseline": "Runs local phpstan analyze with config: `phpstan.neon.dist`, and generates a new `phpstan-baseline.neon`.",
+        "format": "Run @format:php and @format:twig scripts.",
+        "format:php": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+        "phive": "Proxy the phive binary located at ./tools/phive",
+        "php-cs-fixer": "Proxy the php-cs-fixer binary, installed with composer-bin-plugin under the php-cs-fixer namespace in ./vendor-bin/php-cs-fixer.",
+        "phpstan": "Proxy to the php-cs-fixer binary, installed with composer-bin-plugin under the phpstan namespace in ./vendor-bin/phpstan.",
+        "phpunit": "Proxy the phpunit binary, installed with phive in the ./tools directory.",
+        "test": "Run the unit testsuite, runs @tools:install followed by @phpunit -c phpunit.xml.dist",
+        "tools:install": "Install the dependencies specified in ./.phive/phars.xml using @phive"
     }
 }
