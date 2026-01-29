@@ -12,12 +12,14 @@
     ],
     "homepage": "https://github.com/jascha030",
     "require": {
-        "php": ">=8.2"
+        "php": ">=8.3"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.8",
-        "ergebnis/composer-normalize": "^2.45",
-        "roave/backward-compatibility-check": "^8.10",
+        "bamarni/composer-bin-plugin": "^1.8.3",
+        "ergebnis/composer-normalize": "^2.49.0",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "roave/backward-compatibility-check": "^8.7.0",
         "roave/security-advisories": "dev-latest"
     },
     "minimum-stability": "dev",
@@ -38,7 +40,7 @@
             "ergebnis/composer-normalize": true
         },
         "platform": {
-            "php": "8.2"
+            "php": "8.3"
         },
         "platform-check": false,
         "sort-packages": true
