@@ -2,22 +2,15 @@
 
 ## IDE Projectfiles
 /.idea/
-/.vscode/
 
 ## Dynamic
 /.var/
-
-/temp/
-/tmp/
-/dist/
-/build/
-/**.cache
+**.cache
 
 ## Library
-vendor
+vendor/
 /node_modules/
-/tools/*
-!/tools/phive
+/tools/
 
 ## Env
 /.env

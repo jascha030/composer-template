@@ -1,5 +1,4 @@
 {
-  "$schema": "/Users/jaschavanaalst/tools/phpactor-repo/phpactor.schema.json",
   "language_server_phpstan.bin": "%project_root%/vendor/bin/phpstan",
   "language_server_phpstan.config": "%project_root%/phpstan.neon.dist",
   "language_server_php_cs_fixer.bin": "%project_root%/vendor/bin/php-cs-fixer",
