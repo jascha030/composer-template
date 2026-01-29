@@ -3,7 +3,6 @@
     "description": "Template repo for creating composer packages",
     "license": "MIT",
     "type": "library",
-    "keywords": [],
     "authors": [
         {
             "name": "Jascha030",
