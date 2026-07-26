@@ -30,6 +30,7 @@ function deriveNamespaceSegment(string $segment): string
 $vendorNamespace = deriveNamespaceSegment($owner);
 $packageNamespace = deriveNamespaceSegment($repo);
 $namespace = "{$vendorNamespace}\\\\{$packageNamespace}\\\\";
+$namespaceSource = "{$vendorNamespace}\\{$packageNamespace}";
 
 $replacements = [
     'composer.json' => [
@@ -44,8 +45,16 @@ $replacements = [
     '.php-cs-fixer.dist.php' => [
         'jascha030/template' => $composerName,
     ],
+    'src/Example.php' => [
+        'jascha030/template' => $composerName,
+        'Jascha030\\Project' => $namespaceSource,
+    ],
     'tests/bootstrap.php' => [
         'jascha030/template' => $composerName,
+    ],
+    'tests/ExampleTest.php' => [
+        'jascha030/template' => $composerName,
+        'Jascha030\\Project' => $namespaceSource,
     ],
     '.github/CODEOWNERS' => [
         '@jascha030' => '@' . $owner,

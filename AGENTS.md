@@ -83,7 +83,7 @@ Derives replacements from `GITHUB_REPOSITORY` env var (`owner/repo`):
 ```bash
 GITHUB_REPOSITORY="myuser/my-lib" php .github/template-cleanup.php
 # Reset after testing:
-git checkout -- composer.json README.md .php-cs-fixer.dist.php tests/bootstrap.php .github/CODEOWNERS AGENTS.md
+git checkout -- composer.json README.md .php-cs-fixer.dist.php src/Example.php tests/bootstrap.php tests/ExampleTest.php .github/CODEOWNERS AGENTS.md
 ```
 
 ## Editor / IDE
@@ -95,9 +95,9 @@ git checkout -- composer.json README.md .php-cs-fixer.dist.php tests/bootstrap.p
 To regenerate it after a phpactor upgrade: `composer run phpactor:schema` (requires phpactor installed globally; silently skipped otherwise).
 
 ## State of the repo
-- `src/` contains only `.gitkeep` — no classes yet.
-- `tests/` contains only `bootstrap.php` and `Fixtures/.gitkeep`.
-- This is expected; it is a skeleton.
+- `src/` contains `Example.php` — a placeholder class so the CI suite can run out of the box.
+- `tests/` contains `bootstrap.php`, `ExampleTest.php`, and `Fixtures/.gitkeep`.
+- These placeholders are intentionally minimal; replace them with your package's actual classes and tests.
 
 ## What NOT to change without thought
 - Do not move phpstan into `vendor-bin/` — the root `require-dev` and `phpstan.neon.dist` are wired together.
