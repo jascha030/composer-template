@@ -72,9 +72,9 @@
             "@format:php"
         ],
         "format:php": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-        "phpactor:schema": "@php tools/project-tools.php phpactor:schema",
         "phive": "@php tools/project-tools.php phive",
         "php-cs-fixer": "vendor/bin/php-cs-fixer",
+        "phpactor:schema": "@php tools/project-tools.php phpactor:schema",
         "phpstan": "vendor/bin/phpstan",
         "phpunit": "tools/phpunit.phar",
         "test": [

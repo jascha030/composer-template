@@ -43,7 +43,7 @@ $finder = Finder::create()
     ->notName('.phpstorm.meta.php')
     ->ignoreDotFiles(false);
 
-return (new Config(
+return new Config(
     80400,
     <<<'EOF'
         This file is part of the jascha030/template package.
@@ -53,6 +53,6 @@ return (new Config(
         For the full copyright and license information, please view the LICENSE
         file that was distributed with this source code.
         EOF,
-))
+)
     ->setFinder($finder)
     ->setCacheFile($cacheFile);
