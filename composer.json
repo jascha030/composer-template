@@ -71,6 +71,7 @@
             "@format:php"
         ],
         "format:php": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+        "phpactor:schema": "@php tools/generate-phpactor-schema.php",
         "phive": "@php tools/bootstrap-phive.php",
         "php-cs-fixer": "vendor/bin/php-cs-fixer",
         "phpstan": "vendor/bin/phpstan",
@@ -91,11 +92,11 @@
         "analyze": "Runs local phpstan analyze with config:  `phpstan.neon.dist`.",
         "analyze:baseline": "Runs local phpstan analyze with config: `phpstan.neon.dist`, and generates a new `phpstan-baseline.neon`.",
         "bc-check": "Check for backwards-compatibility issues.",
-        "format": "Run @format:php and @format:twig scripts.",
+        "format": "Run @format:php script.",
         "format:php": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-        "phive": "Proxy the phive binary located at ./tools/phive",
+        "phive": "Proxy the phive binary, auto-downloaded by ./tools/bootstrap-phive.php on first use.",
         "php-cs-fixer": "Proxy the php-cs-fixer binary, installed with composer-bin-plugin under the php-cs-fixer namespace in ./vendor-bin/php-cs-fixer.",
-        "phpstan": "Proxy to the php-cs-fixer binary, installed with composer-bin-plugin under the phpstan namespace in ./vendor-bin/phpstan.",
+        "phpstan": "Proxy the phpstan binary, installed in ./vendor/bin/phpstan.",
         "phpunit": "Proxy the phpunit binary, installed with phive in the ./tools directory.",
         "test": "Run the unit testsuite, runs @tools:install followed by @phpunit -c phpunit.xml.dist",
         "tools:install": "Install the dependencies specified in ./.phive/phars.xml using @phive"

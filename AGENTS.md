@@ -75,12 +75,16 @@ Derives replacements from `GITHUB_REPOSITORY` env var (`owner/repo`):
 ```bash
 GITHUB_REPOSITORY="myuser/my-lib" php .github/template-cleanup.php
 # Reset after testing:
-git checkout -- composer.json README.md .php-cs-fixer.dist.php tests/bootstrap.php .github/CODEOWNERS
+git checkout -- composer.json README.md .php-cs-fixer.dist.php tests/bootstrap.php .github/CODEOWNERS AGENTS.md
 ```
 
 ## Editor / IDE
-- `.phpactor.json` points tools to `%project_root%/` paths.
-- `.editorconfig`: 2 spaces for general files, **4 spaces** for PHP/JSON/XML.
+- `.phpactor.json` points tools to `%project_root%/` paths and includes a `$schema` reference to `phpactor.schema.json` for LSP autocomplete.
+- `.editorconfig`: 2 spaces for general files, **4 spaces** for PHP, `composer.json`, and XML.
+
+### Phpactor schema
+`phpactor.schema.json` is committed to the repo so the JSON LSP (e.g. neovim) provides autocomplete for `.phpactor.json` out of the box.
+To regenerate it after a phpactor upgrade: `composer run phpactor:schema` (requires phpactor installed globally; silently skipped otherwise).
 
 ## State of the repo
 - `src/` contains only `.gitkeep` — no classes yet.

@@ -50,6 +50,9 @@ $replacements = [
     '.github/CODEOWNERS' => [
         '@jascha030' => '@' . $owner,
     ],
+    'AGENTS.md' => [
+        'jascha030/template' => $composerName,
+    ],
 ];
 
 foreach ($replacements as $file => $map) {

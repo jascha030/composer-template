@@ -44,7 +44,7 @@ $finder = Finder::create()
     ->ignoreDotFiles(false);
 
 return (new Config(
-    Config::PHP_82,
+    80400,
     <<<'EOF'
         This file is part of the jascha030/template package.
 
