@@ -22,7 +22,15 @@ This repo uses **multiple isolation strategies** — do not assume everything is
 |------|----------|-------------------|
 | php-cs-fixer | `vendor-bin/php-cs-fixer/vendor/` | `bamarni/composer-bin-plugin` (isolated composer.json) |
 | phpstan | `vendor/bin/phpstan` | Main `require-dev` in root composer.json |
-| phpunit | `tools/phpunit.phar` | **phive** (`.phive/phars.xml`) — phive itself is auto-downloaded by `tools/project-tools.php` on first use |
+| phpunit | `tools/phpunit.phar` | **phive** (`.phive/phars.xml`) — phive itself is resolved by `tools/project-tools.php` (local → global → auto-download) |
+
+### phive bootstrap security
+`tools/project-tools.php` resolves phive in this order:
+1. `./tools/phive` (already downloaded)
+2. `phive` on PATH (globally installed)
+3. Auto-download phive 0.16.0 from GitHub releases with **GPG signature verification** if `gpg` is available, otherwise **SHA-256 checksum verification**.
+
+If GPG verification is available but fails, the script aborts (no silent downgrade). The SHA-256 fallback protects against network corruption and basic MITM; GPG provides full authenticity. Pinned to version 0.16.0 — bump the constants in `tools/project-tools.php` when upgrading.
 
 ### php-cs-fixer quirk
 The fixer config (`.php-cs-fixer.dist.php`) requires `vendor-bin/php-cs-fixer/vendor/autoload.php` to load a custom config class from `jascha030/php-cs-fixer-config`. If that autoload file is missing, the fixer won't run.
