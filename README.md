@@ -6,8 +6,8 @@ A simple project description similar to the one found in your `composer.json`.
 
 ## Prerequisites
 
-* php: `^7.4|^8.0.0|^8.1`
-* Composer `^2.3` (prefered)
+* php: `>=8.4`
+* Composer `^2.2`
 
 > **Note: Don't forget to include any server prerequisites**, for example _php extensions_,
 > even when they are extensions which are enabled by default, you can save people a lot of wasted time in the off-chance
@@ -38,14 +38,13 @@ Extensive instructions in how to use your package in general or for use in the d
 Included with the package are a set of Unit tests using `phpunit/phpunit`. For ease of use a composer script command is
 defined to run the tests.
 
-The default configuration will be used when using the `test` command, which is defined at `phpunit.dist.xml`.
+The default configuration will be used when using the `test` command, which is defined at `phpunit.xml.dist`.
 
 ```shell
 composer run test
 ```
 
-A code coverage report is generated in the project's root as `cov.xml`. The `cov.xml` file is not ignored in the
-`.gitignore` by default. You are encouraged to commit the latest code coverage report, when deploying new features.
+A code coverage report is generated at `.var/cache/phpunit/cov.xml`. This file is already ignored by `.gitignore`.
 
 ### Code style & Formatting
 
