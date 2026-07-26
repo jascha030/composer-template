@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-function runPhive(): void
+function ensure_phive_downloaded_and_proxy(): void
 {
     $toolsDir = __DIR__;
     $phivePhar = $toolsDir . '/phive';
@@ -47,7 +47,7 @@ function runPhive(): void
     exit($exitCode);
 }
 
-function runPhpactorSchema(): void
+function generate_phpactor_json_schema_when_available(): void
 {
     $phpactor = shell_exec('which phpactor 2>/dev/null');
 
@@ -60,7 +60,7 @@ function runPhpactorSchema(): void
     exit($exitCode);
 }
 
-function showHelp(): void
+function print_usage_and_exit(): void
 {
     fwrite(STDOUT, "Usage: php tools/project-tools.php <command> [args...]\n\nCommands:\n  phive           Auto-download phive and proxy arguments through\n  phpactor:schema Generate phpactor.schema.json (requires global phpactor)\n");
     exit(1);
@@ -69,7 +69,7 @@ function showHelp(): void
 $command = $argv[1] ?? null;
 
 match ($command) {
-    'phive' => runPhive(),
-    'phpactor:schema' => runPhpactorSchema(),
-    default => showHelp(),
+    'phive' => ensure_phive_downloaded_and_proxy(),
+    'phpactor:schema' => generate_phpactor_json_schema_when_available(),
+    default => print_usage_and_exit(),
 };
