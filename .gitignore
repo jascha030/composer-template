@@ -10,7 +10,8 @@
 ## Library
 vendor/
 /node_modules/
-/tools/
+/tools/*
+!/tools/bootstrap-phive.php
 
 ## Env
 /.env
