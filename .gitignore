@@ -10,7 +10,6 @@
 ## Library
 vendor/
 /node_modules/
-/composer.lock
 /tools/*
 !/tools/project-tools.php
 
