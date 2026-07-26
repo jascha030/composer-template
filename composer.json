@@ -40,7 +40,7 @@
             "ergebnis/composer-normalize": true
         },
         "platform": {
-            "php": "8.4"
+            "php": "8.4.1"
         },
         "platform-check": false,
         "sort-packages": true
