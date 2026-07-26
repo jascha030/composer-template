@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   cleanup:
-    if: github.run_number == 1
+    if: github.run_number == 1 && github.repository != 'jascha030/composer-template'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
