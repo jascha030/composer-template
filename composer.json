@@ -11,14 +11,14 @@
     ],
     "homepage": "https://github.com/jascha030",
     "require": {
-        "php": ">=8.3"
+        "php": ">=8.4"
     },
     "require-dev": {
-        "bamarni/composer-bin-plugin": "^1.8.3",
-        "ergebnis/composer-normalize": "^2.49.0",
-        "phpstan/phpstan": "^2.1",
+        "bamarni/composer-bin-plugin": "^1.9",
+        "ergebnis/composer-normalize": "^2.52",
+        "phpstan/phpstan": "^2.2",
         "phpstan/phpstan-phpunit": "^2.0",
-        "roave/backward-compatibility-check": "^8.7.0",
+        "roave/backward-compatibility-check": "^8.21",
         "roave/security-advisories": "dev-latest"
     },
     "minimum-stability": "dev",
@@ -39,7 +39,7 @@
             "ergebnis/composer-normalize": true
         },
         "platform": {
-            "php": "8.3"
+            "php": "8.4"
         },
         "platform-check": false,
         "sort-packages": true
@@ -71,7 +71,7 @@
             "@format:php"
         ],
         "format:php": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-        "phive": "tools/phive",
+        "phive": "@php tools/bootstrap-phive.php",
         "php-cs-fixer": "vendor/bin/php-cs-fixer",
         "phpstan": "vendor/bin/phpstan",
         "phpunit": "tools/phpunit.phar",
@@ -83,7 +83,7 @@
         "tools:install": [
             "@putenv XDEBUG_MODE=off",
             "@putenv COMPOSER_ALLOW_SUPERUSER=1",
-            "@php tools/phive install --trust-gpg-keys 4AA394086372C20A 1> /dev/null",
+            "@php tools/bootstrap-phive.php install --trust-gpg-keys 4AA394086372C20A 1> /dev/null",
             "@php -r \" ! file_exists('tools/phpunit.xsd') && (new Phar('tools/phpunit.phar'))->extractTo('tools', 'phpunit.xsd');\""
         ]
     },
