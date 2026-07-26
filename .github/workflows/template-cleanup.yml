@@ -1,0 +1,41 @@
+name: Template Cleanup
+
+on:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.run_number == 1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Run template cleanup
+        run: php .github/template-cleanup.php
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "chore: apply template customization" || echo "No changes to commit"
+
+      - name: Remove cleanup workflow
+        run: |
+          rm -f .github/workflows/template-cleanup.yml .github/template-cleanup.php
+          git add -A
+          git commit -m "chore: remove template cleanup workflow" || echo "No changes to commit"
+
+      - name: Push changes
+        run: git push
