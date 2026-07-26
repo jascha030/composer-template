@@ -22,7 +22,7 @@ This repo uses **multiple isolation strategies** — do not assume everything is
 |------|----------|-------------------|
 | php-cs-fixer | `vendor-bin/php-cs-fixer/vendor/` | `bamarni/composer-bin-plugin` (isolated composer.json) |
 | phpstan | `vendor/bin/phpstan` | Main `require-dev` in root composer.json |
-| phpunit | `tools/phpunit.phar` | **phive** (`.phive/phars.xml`) — phive itself is auto-downloaded by `tools/bootstrap-phive.php` on first use |
+| phpunit | `tools/phpunit.phar` | **phive** (`.phive/phars.xml`) — phive itself is auto-downloaded by `tools/project-tools.php` on first use |
 
 ### php-cs-fixer quirk
 The fixer config (`.php-cs-fixer.dist.php`) requires `vendor-bin/php-cs-fixer/vendor/autoload.php` to load a custom config class from `jascha030/php-cs-fixer-config`. If that autoload file is missing, the fixer won't run.

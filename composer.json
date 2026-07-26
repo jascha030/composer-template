@@ -71,8 +71,8 @@
             "@format:php"
         ],
         "format:php": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-        "phpactor:schema": "@php tools/generate-phpactor-schema.php",
-        "phive": "@php tools/bootstrap-phive.php",
+        "phpactor:schema": "@php tools/project-tools.php phpactor:schema",
+        "phive": "@php tools/project-tools.php phive",
         "php-cs-fixer": "vendor/bin/php-cs-fixer",
         "phpstan": "vendor/bin/phpstan",
         "phpunit": "tools/phpunit.phar",
@@ -84,7 +84,7 @@
         "tools:install": [
             "@putenv XDEBUG_MODE=off",
             "@putenv COMPOSER_ALLOW_SUPERUSER=1",
-            "@php tools/bootstrap-phive.php install --trust-gpg-keys 4AA394086372C20A 1> /dev/null",
+            "@php tools/project-tools.php phive install --trust-gpg-keys 4AA394086372C20A 1> /dev/null",
             "@php -r \" ! file_exists('tools/phpunit.xsd') && (new Phar('tools/phpunit.phar'))->extractTo('tools', 'phpunit.xsd');\""
         ]
     },
@@ -94,7 +94,7 @@
         "bc-check": "Check for backwards-compatibility issues.",
         "format": "Run @format:php script.",
         "format:php": "@php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-        "phive": "Proxy the phive binary, auto-downloaded by ./tools/bootstrap-phive.php on first use.",
+        "phive": "Proxy the phive binary, auto-downloaded by ./tools/project-tools.php on first use.",
         "php-cs-fixer": "Proxy the php-cs-fixer binary, installed with composer-bin-plugin under the php-cs-fixer namespace in ./vendor-bin/php-cs-fixer.",
         "phpstan": "Proxy the phpstan binary, installed in ./vendor/bin/phpstan.",
         "phpunit": "Proxy the phpunit binary, installed with phive in the ./tools directory.",

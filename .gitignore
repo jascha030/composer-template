@@ -11,8 +11,7 @@
 vendor/
 /node_modules/
 /tools/*
-!/tools/bootstrap-phive.php
-!/tools/generate-phpactor-schema.php
+!/tools/project-tools.php
 
 ## Env
 /.env
