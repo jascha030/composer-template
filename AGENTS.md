@@ -36,7 +36,7 @@ If GPG verification is available but fails, the script aborts (no silent downgra
 The fixer config (`.php-cs-fixer.dist.php`) requires `vendor-bin/php-cs-fixer/vendor/autoload.php` to load a custom config class from `jascha030/php-cs-fixer-config`. If that autoload file is missing, the fixer won't run.
 
 ### phpstan quirk
-`phpstan.neon.dist` bootstraps `vendor-bin/php-cs-fixer/vendor/autoload.php` — this is intentional because phpstan needs to understand the custom php-cs-fixer config classes.
+`phpstan.neon.dist` bootstraps `vendor-bin/php-cs-fixer/vendor/autoload.php` — this is intentional because phpstan needs to understand the custom php-cs-fixer config classes. The config also analyzes `tools/`, so `project-tools.php` is checked at level max.
 
 ## Running checks
 
