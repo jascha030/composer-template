@@ -1,53 +1,56 @@
 <?php
 
+/*
+ * This file is part of the jascha030/template package.
+ *
+ * (c) Jascha van Aalst <contact@jaschavanaalst.nl>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 declare(strict_types=1);
 
-const PHIVE_VERSION = '0.16.0';
+const PHIVE_VERSION      = '0.16.0';
 const PHIVE_DOWNLOAD_URL = 'https://github.com/phar-io/phive/releases/download/0.16.0/phive-0.16.0.phar';
-const PHIVE_SHA256 = '1525f25afec4bcdc0aa8db7bb4b0063851332e916698daf90c747461642a42ed';
-const PHIVE_GPG_KEY_ID = '6AF725270AB81E04D79442549D8A98B29B2D5D79';
+const PHIVE_SHA256       = '1525f25afec4bcdc0aa8db7bb4b0063851332e916698daf90c747461642a42ed';
+const PHIVE_GPG_KEY_ID   = '6AF725270AB81E04D79442549D8A98B29B2D5D79';
 
 function resolve_phive_binary(): string
 {
-    $toolsDir = __DIR__;
-    $localPhive = $toolsDir . '/phive';
+    $local = __DIR__ . '/phive';
 
-    if (is_file($localPhive)) {
-        return $localPhive;
+    if (is_file($local)) {
+        return $local;
     }
 
-    $globalPhive = shell_exec('which phive 2>/dev/null');
-    if ($globalPhive !== false && $globalPhive !== null && '' !== trim($globalPhive)) {
-        return trim($globalPhive);
+    $global = find_command('phive');
+
+    if (null !== $global) {
+        return $global;
     }
 
-    return download_and_verify_phive($localPhive);
+    return download_and_verify_phive($local);
 }
 
 function download_and_verify_phive(string $targetPath): string
 {
-    $toolsDir = dirname($targetPath);
-    if (!is_dir($toolsDir) && !mkdir($toolsDir, 0o755, true)) {
-        fwrite(STDERR, "Failed to create {$toolsDir}\n");
-        exit(1);
+    $directory = dirname($targetPath);
+
+    if (! is_dir($directory) && ! mkdir($directory, 0o755, true)) {
+        throw new RuntimeException(sprintf('Failed to create directory "%s".', $directory));
     }
 
     $contents = download_url(PHIVE_DOWNLOAD_URL);
-    if ($contents === null) {
-        fwrite(STDERR, "Failed to download phive from " . PHIVE_DOWNLOAD_URL . "\n");
-        exit(1);
-    }
 
-    $gpgAvailable = shell_exec('which gpg 2>/dev/null');
-    if ($gpgAvailable !== false && $gpgAvailable !== null && '' !== trim($gpgAvailable)) {
-        verify_phive_with_gpg($contents);
+    if (command_exists('gpg')) {
+        assert_phive_gpg_signature_valid($contents);
     } else {
-        verify_phive_with_sha256($contents);
+        assert_phive_sha256_matches($contents);
     }
 
-    if (file_put_contents($targetPath, $contents) === false) {
-        fwrite(STDERR, "Failed to write {$targetPath}\n");
-        exit(1);
+    if (false === file_put_contents($targetPath, $contents)) {
+        throw new RuntimeException(sprintf('Failed to write "%s".', $targetPath));
     }
 
     chmod($targetPath, 0o755);
@@ -55,93 +58,177 @@ function download_and_verify_phive(string $targetPath): string
     return $targetPath;
 }
 
-function verify_phive_with_gpg(string $pharContents): void
+function assert_phive_gpg_signature_valid(string $pharContents): void
 {
-    $ascUrl = PHIVE_DOWNLOAD_URL . '.asc';
-    $ascContents = download_url($ascUrl);
-    if ($ascContents === null) {
-        fwrite(STDERR, "Failed to download GPG signature from {$ascUrl}\n");
-        fwrite(STDERR, "GPG is available but signature download failed. Aborting for security.\n");
-        exit(1);
+    $signature = download_url(PHIVE_DOWNLOAD_URL . '.asc');
+
+    $temporaryPhar = tempnam(sys_get_temp_dir(), 'phive_');
+
+    if (false === $temporaryPhar) {
+        throw new RuntimeException('Unable to create temporary file.');
     }
 
-    $tmpPhar = tempnam(sys_get_temp_dir(), 'phive_phar_');
-    $tmpAsc  = $tmpPhar . '.asc';
-    file_put_contents($tmpPhar, $pharContents);
-    file_put_contents($tmpAsc, $ascContents);
+    $temporarySignature = $temporaryPhar . '.asc';
 
-    passthru("gpg --keyserver hkps://keys.openpgp.org --recv-keys " . PHIVE_GPG_KEY_ID . " 2>/dev/null", $recvExit);
-    passthru("gpg --verify " . escapeshellarg($tmpAsc) . " " . escapeshellarg($tmpPhar) . " 2>&1", $verifyExit);
+    file_put_contents($temporaryPhar, $pharContents);
+    file_put_contents($temporarySignature, $signature);
 
-    unlink($tmpPhar);
-    unlink($tmpAsc);
+    try {
+        passthru(
+            sprintf(
+                'gpg --keyserver hkps://keys.openpgp.org --recv-keys %s >/dev/null 2>&1',
+                escapeshellarg(PHIVE_GPG_KEY_ID)
+            ),
+            $ignoredExitCode,
+        );
 
-    if ($verifyExit !== 0) {
-        fwrite(STDERR, "GPG signature verification failed. The downloaded phive PHAR may be tampered.\n");
-        exit(1);
+        passthru(
+            sprintf(
+                'gpg --verify %s %s >/dev/null 2>&1',
+                escapeshellarg($temporarySignature),
+                escapeshellarg($temporaryPhar),
+            ),
+            $verificationExitCode,
+        );
+    } finally {
+        @unlink($temporaryPhar);
+        @unlink($temporarySignature);
+    }
+
+    if (0 !== $verificationExitCode) {
+        throw new RuntimeException('GPG signature verification failed. The downloaded PHAR may have been tampered with.');
     }
 }
 
-function verify_phive_with_sha256(string $pharContents): void
+function assert_phive_sha256_matches(string $contents): void
 {
-    if (hash('sha256', $pharContents) !== PHIVE_SHA256) {
-        fwrite(STDERR, "SHA-256 mismatch: downloaded phive is corrupt or tampered.\n");
-        fwrite(STDERR, "Expected:    " . PHIVE_SHA256 . "\n");
-        fwrite(STDERR, "Calculated:  " . hash('sha256', $pharContents) . "\n");
-        exit(1);
+    $actual = hash('sha256', $contents);
+
+    if (PHIVE_SHA256 !== $actual) {
+        throw new RuntimeException(sprintf("SHA-256 verification failed.\nExpected:   %s\nCalculated: %s", PHIVE_SHA256, $actual));
     }
 }
 
-function download_url(string $url): ?string
+function download_url(string $url): string
 {
     $contents = @file_get_contents($url);
 
-    if ($contents === false && function_exists('curl_init')) {
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        $contents = curl_exec($ch);
-        curl_close($ch);
+    if (false === $contents && function_exists('curl_init')) {
+        $curl = curl_init($url);
+
+        curl_setopt($curl, \CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, \CURLOPT_FOLLOWLOCATION, true);
+
+        $contents = curl_exec($curl);
+
+        curl_close($curl);
     }
 
-    return $contents !== false ? $contents : null;
+    if (! is_string($contents)) {
+        throw new RuntimeException(sprintf('Failed to download "%s".', $url));
+    }
+
+    return $contents;
 }
 
-function proxy_to_phive(string $phivePath): void
+function command_exists(string $command): bool
 {
-    global $argv;
-    array_shift($argv); // script name
-    array_shift($argv); // 'phive' command
-    $args = array_map('escapeshellarg', $argv);
-    $cmd = escapeshellarg($phivePath) . ($args !== [] ? ' ' . implode(' ', $args) : '');
+    return null !== find_command($command);
+}
 
-    passthru($cmd, $exitCode);
+function find_command(string $command): ?string
+{
+    $result = shell_exec(
+        sprintf(
+            'command -v %s 2>/dev/null',
+            escapeshellarg($command),
+        )
+    );
+
+    if (! is_string($result)) {
+        return null;
+    }
+
+    $result = trim($result);
+
+    return '' === $result ? null : $result;
+}
+
+/**
+ * @param list<string> $argv
+ */
+function proxy_to_phive(string $phivePath, array $argv): never
+{
+    $arguments = array_slice($argv, 2);
+
+    $command = escapeshellarg($phivePath);
+
+    if ([] !== $arguments) {
+        $command .= ' ' . implode(
+            ' ',
+            array_map('escapeshellarg', $arguments),
+        );
+    }
+
+    passthru($command, $exitCode);
+
     exit($exitCode);
 }
 
-function generate_phpactor_json_schema_when_available(): void
+function generate_phpactor_json_schema_when_available(): never
 {
-    $phpactor = shell_exec('which phpactor 2>/dev/null');
+    if (! command_exists('phpactor')) {
+        fwrite(\STDOUT, "phpactor not found, skipping schema generation.\n");
 
-    if (false === $phpactor || null === $phpactor || '' === trim($phpactor)) {
-        fwrite(STDOUT, "phpactor not found, skipping schema generation.\n");
         exit(0);
     }
 
-    passthru('phpactor config:json-schema phpactor.schema.json', $exitCode);
+    passthru(
+        'phpactor config:json-schema phpactor.schema.json',
+        $exitCode,
+    );
+
     exit($exitCode);
 }
 
-function print_usage_and_exit(): void
+function print_usage_and_exit(): never
 {
-    fwrite(STDOUT, "Usage: php tools/project-tools.php <command> [args...]\n\nCommands:\n  phive           Auto-download phive and proxy arguments through\n  phpactor:schema Generate phpactor.schema.json (requires global phpactor)\n");
+    fwrite(
+        \STDOUT,
+        <<<'TEXT'
+            Usage:
+              php tools/project-tools.php <command> [args...]
+
+            Commands:
+              phive
+                  Download PHIVE if necessary and proxy all arguments.
+
+              phpactor:schema
+                  Generate phpactor.schema.json.
+
+            TEXT
+    );
+
     exit(1);
 }
 
-$command = $argv[1] ?? null;
+if (\PHP_SAPI !== 'cli') {
+    throw new RuntimeException('This script must be run from the command line.');
+}
 
-match ($command) {
-    'phive' => proxy_to_phive(resolve_phive_binary()),
-    'phpactor:schema' => generate_phpactor_json_schema_when_available(),
-    default => print_usage_and_exit(),
-};
+/**
+ * @var list<string> $arguments
+ */
+$arguments = $_SERVER['argv'] ?? [];
+
+try {
+    match ($arguments[1] ?? null) {
+        'phive'           => proxy_to_phive(resolve_phive_binary(), $arguments),
+        'phpactor:schema' => generate_phpactor_json_schema_when_available(),
+        default           => print_usage_and_exit(),
+    };
+} catch (Throwable $exception) {
+    fwrite(\STDERR, $exception->getMessage() . \PHP_EOL);
+
+    exit(1);
+}
